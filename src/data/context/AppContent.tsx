@@ -1,24 +1,29 @@
-import { createContext, useState } from "react";
-
-type Theme = "dark" | "";
+import { createContext, useEffect, useState } from "react";
 
 interface AppProviderProps {
   children?: any;
 }
 
 interface AppContextProps {
-  theme?: Theme;
+  theme?: string;
   alternatingTheme?: () => void;
 }
 
 const AppContent = createContext<AppContextProps>({});
 
 export function AppProvider(props: AppProviderProps) {
-  const [theme, setTheme] = useState<Theme>("");
+  const [theme, setTheme] = useState("");
 
   function alternatingTheme() {
-    setTheme(theme === "" ? "dark" : "");
+    const themeValue = theme === "" ? "dark" : "";
+    setTheme(themeValue);
+    localStorage.setItem("theme", themeValue);
   }
+
+  useEffect(() => {
+    const themeSaved = localStorage.getItem("theme") as string;
+    setTheme(themeSaved);
+  }, []);
 
   return (
     <AppContent.Provider

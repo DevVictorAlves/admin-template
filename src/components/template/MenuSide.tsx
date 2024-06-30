@@ -1,3 +1,4 @@
+import useAuth from "@/src/data/hook/useAuth";
 import {
   IconHome,
   IconLogout,
@@ -10,6 +11,8 @@ import MenuItem from "./MenuItem";
 interface MenuProps {}
 
 export default function MenuSide(props: MenuProps) {
+  const { logout } = useAuth();
+
   return (
     <aside
       className={`flex flex-col
@@ -42,7 +45,7 @@ export default function MenuSide(props: MenuProps) {
           dark:hover:text-white
         `}
           text="Sair"
-          onClick={() => console.log("saind")}
+          onClick={logout}
           icon={IconLogout}
         ></MenuItem>
       </ul>
